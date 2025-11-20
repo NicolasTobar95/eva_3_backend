@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contenido %}
+
+<h2>Detalle de Sala: {{ sala.nombre }}</h2>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Capacidad:</strong> {{ sala.capacidad_maxima }}</li>
+
+    {% if reserva %}
+        <li class="list-group-item"><strong>Estado:</strong> Ocupada</li>
+        <li class="list-group-item"><strong>Inicio:</strong> {{ reserva.fecha_hora_inicio }}</li>
+        <li class="list-group-item"><strong>Término:</strong> {{ reserva.fecha_hora_termino }}</li>
+    {% else %}
+        <li class="list-group-item"><strong>Estado:</strong> Libre</li>
+    {% endif %}
+</ul>
+
+<a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+
+{% endblock %}

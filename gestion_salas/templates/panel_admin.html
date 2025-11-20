@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h1 class="mb-3">Panel Administrador</h1>
+
+<div class="mb-3">
+    <a href="{% url 'crear_sala' %}" class="btn btn-success">Agregar Sala</a>
+    <!-- Botón para acceder al admin de Django -->
+    <a href="{% url 'admin:index' %}" class="btn btn-secondary">Ir al Admin de Django</a>
+</div>
+
+<table class="table tabla-salas">
+    <thead>
+        <tr>
+            <th>Salas</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+            <th>Tiempo restante</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for sala in salas %}
+        <tr>
+            <td>{{ sala.nombre }}</td>
+            <td>{{ sala.capacidad_maxima }}</td>
+
+            <td>
+                {% if sala.disponible %}
+                    <span class="text-success fw-bold">Libre</span>
+                {% else %}
+                    <span class="text-danger fw-bold">Ocupada</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if sala.tiempo_restante %}
+                    {{ sala.tiempo_restante }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'editar_sala' sala.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'detalle_sala' sala.id %}" class="btn btn-info btn-sm">Ver</a>
+                <a href="{% url 'eliminar_sala' sala.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Consola de acciones</h3>
+
+<div class="card p-3" style="
+    height: 250px;
+    overflow-y: auto;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: Consolas, monospace;
+    font-size: 0.9rem;">
+    
+    {% for log in log_admin %}
+        <div>• {{ log }}</div>
+    {% empty %}
+        <div class="text-muted">Sin acciones registradas…</div>
+    {% endfor %}
+</div>
+
+{% endblock %}

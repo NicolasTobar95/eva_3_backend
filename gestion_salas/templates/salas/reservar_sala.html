@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2 class="mb-4">Reservar Sala "{{ sala.nombre }}"</h2>
+
+<div class="card p-4 shadow">
+<form method="POST" id="formReserva">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">RUT del Reservante:</label>
+        {{ form.rut_reservante }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha y hora de inicio:</label>
+        {{ form.fecha_hora_inicio }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha y hora de término:</label>
+        {{ form.fecha_hora_termino }}
+    </div>
+
+    <p class="text-danger fw-bold" id="alertaTiempo" style="display:none;">
+        Tiempo mayor a 2 horas — ajuste los valores.
+    </p>
+
+    <p class="text-danger fw-bold" id="alertaInicioMayor" style="display:none;">
+        La hora de inicio no puede ser mayor que la hora de término.
+    </p>
+
+    <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+    <a href="{% url 'panel_usuario' %}" class="btn btn-secondary">Volver</a>
+
+</form>
+</div>
+
+<script>
+function validarTiempo() {
+    const inicio = new Date(document.getElementById("id_fecha_hora_inicio").value);
+    const fin = new Date(document.getElementById("id_fecha_hora_termino").value);
+
+    const diffMs = fin - inicio;
+    const dosHoras = 2 * 60 * 60 * 1000;
+
+    const alerta2h = document.getElementById("alertaTiempo");
+    const alertaInicio = document.getElementById("alertaInicioMayor");
+    const btn = document.getElementById("btnConfirmar");
+
+    if (inicio > fin) {
+        alertaInicio.style.display = "block";
+        alerta2h.style.display = "none";
+        return;
+    } else {
+        alertaInicio.style.display = "none";
+    }
+
+    if (diffMs > dosHoras) {
+        alerta2h.style.display = "block";
+    } else {
+        alerta2h.style.display = "none";
+    }
+}
+document.getElementById("id_fecha_hora_inicio").addEventListener("change", validarTiempo);
+document.getElementById("id_fecha_hora_termino").addEventListener("change", validarTiempo);
+</script>
+
+{% endblock %}

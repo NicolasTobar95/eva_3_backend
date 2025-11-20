@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<h1 class="mb-3">Reservar Salas</h1>
+
+<table class="table tabla-salas">
+    <thead>
+        <tr>
+            <th>Sala</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+            <th>Tiempo restante</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for sala in salas %}
+        <tr>
+            <td>{{ sala.nombre }}</td>
+            <td>{{ sala.capacidad_maxima }}</td>
+
+            <td>
+                {% if sala.disponible %}
+                    <span class="text-success fw-bold">Libre</span>
+                {% else %}
+                    <span class="text-danger fw-bold">Ocupada</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if sala.tiempo_restante %}
+                    {{ sala.tiempo_restante }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+
+            <td>
+                {% if sala.disponible %}
+                    <a href="{% url 'reservar_sala' sala.id %}"
+                       class="btn btn-primary btn-sm">Reservar</a>
+                    <a href="{% url 'detalle_sala' sala.id %}" class="btn btn-info btn-sm">Ver</a>
+                {% else %}
+                    <span class="text-muted">No disponible</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

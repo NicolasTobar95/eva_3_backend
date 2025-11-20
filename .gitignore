@@ -1,0 +1,8 @@
+# Entornos virtuales
+venv/
+env/
+__pycache__/
+
+# Archivos de configuración sensibles
+*.env
+*.sqlite3

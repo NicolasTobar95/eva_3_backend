@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservas Registradas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container py-4">
+
+<h2 class="mb-4">Reservas Registradas</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Sala</th>
+            <th>RUT Usuario</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in reservas %}
+        <tr>
+            <td>{{ r.sala.nombre }}</td>
+            <td>{{ r.rut_usuario }}</td>
+            <td>{{ r.fecha_inicio }}</td>
+            <td>{{ r.fecha_fin }}</td>
+            <td>
+                {% if r.fecha_fin >= now %}
+                <span class="badge bg-success">Activa</span>
+                {% else %}
+                <span class="badge bg-secondary">Finalizada</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'panel_admin' %}" class="btn btn-primary">Volver</a>
+
+</body>
+</html>
