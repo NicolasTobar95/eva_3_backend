@@ -1,0 +1,22 @@
+nombre: nicolas
+email: nicolas.t@gmail.com
+pass: 123
+
+.env 
+
+ORACLE_NAME=xe
+ORACLE_USER=system
+ORACLE_PASSWORD=Inacap2025
+ORACLE_HOST=localhost
+ORACLE_PORT=1521
+
+ABRIR
+
+python -m venv venv 
+venv\Scripts\Activate.ps1 
+pip install -r requirements.txt
+
+python manage.py makemigrations 
+python manage.py migrate 
+
+python manage.py runserver 

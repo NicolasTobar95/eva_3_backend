@@ -1,0 +1,8 @@
+# Framework web principal -- pruebas Django>=4.2
+Django
+
+# Manejo de variables de entorno
+django-environ
+
+# Driver Oracle
+oracledb<3.3
